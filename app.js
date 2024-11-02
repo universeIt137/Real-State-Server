@@ -45,12 +45,22 @@ app.use(mongoSanitize())
 
 app.use(express.urlencoded({ limit: '1000mb' }));
 app.use(express.json({ limit: '1000mb' }));
+
+app.set('trust proxy', 'loopback'); // Only trust localhost proxy
+app.set('trust proxy', '192.168.0.1'); // Trust specific IP
+app.set('trust proxy', 1); // Trust the first proxy
+
+app.get("/", (req, res) => {
+    res.send("Server is running");
+})
+
 // Database Connect
+
 const db = process.env.DATABASE;
 
-mongoose.connect(db).then((res)=>{
+mongoose.connect(db).then((res) => {
     console.log("---Connected to database----");
-}).catch((err)=>{
+}).catch((err) => {
     console.log("Error connecting to database", err);
 });
 
