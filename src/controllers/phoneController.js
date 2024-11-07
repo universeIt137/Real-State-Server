@@ -67,3 +67,20 @@ exports.phoneNumberDelete = async (req,res)=>{
         })
     }
 };
+
+exports.phoneNumberList = async (req,res)=>{
+    try {
+        let data = await phoneModel.find({});
+        return res.status(200).json({
+            status : "success",
+            message: "Phone number list fetched successfully",
+            data : data,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status : "fail",
+            message: "Failed to fetch phone number list",
+            error : error,
+        })
+    }
+};
