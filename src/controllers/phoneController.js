@@ -84,3 +84,27 @@ exports.phoneNumberList = async (req,res)=>{
         })
     }
 };
+
+exports.phoneNumberById = async (req,res)=>{
+    try {
+        let id = req.params.id;
+        let data = await phoneModel.findById(id);
+        if(!data){
+            return res.status(404).json({
+                status : "fail",
+                message: "Phone number not found",
+            })
+        }
+        return res.status(200).json({
+            status : "success",
+            message: "Phone number fetched successfully",
+            data : data,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status : "fail",
+            message: "Failed to fetch phone number",
+            error : error,
+        })
+    }
+}
